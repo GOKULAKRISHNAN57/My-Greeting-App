@@ -10,8 +10,9 @@ public class GreetingRepository {
 
     private final List<Greeting> greetings = new ArrayList<>();
 
-    public void save(Greeting greeting) {
+    public Greeting save(Greeting greeting) {
         greetings.add(greeting);
+        return greeting;
     }
 
     public List<Greeting> findAll() {
