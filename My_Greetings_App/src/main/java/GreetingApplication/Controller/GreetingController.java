@@ -3,10 +3,9 @@ package GreetingApplication.Controller;
 import GreetingApplication.Model.Greeting;
 import GreetingApplication.Service.GreetingService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/greeting")
@@ -25,5 +24,21 @@ public class GreetingController {
                 greetingService.getGreetingMessage(firstName,lastName);
 
         return greetingService.saveGreeting(message);
+    }
+
+    @GetMapping("/all")
+    public List<Greeting> getAllGreetings() {
+        return greetingService.getAllGreetings();
+    }
+
+    @PutMapping("/edit/{id}")
+    public Greeting editGreeting(@PathVariable Long id, @RequestParam String message) {
+
+        return greetingService.editGreeting(id,message);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public String deleteGreeting(@PathVariable Long id) {
+        return greetingService.deleteGreeting(id);
     }
 }

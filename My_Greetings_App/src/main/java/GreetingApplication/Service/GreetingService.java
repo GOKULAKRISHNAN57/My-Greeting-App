@@ -4,6 +4,8 @@ import GreetingApplication.Model.Greeting;
 import GreetingApplication.Repository.GreetingRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class GreetingService {
 
@@ -36,5 +38,28 @@ public class GreetingService {
         Greeting greeting = new Greeting(id++, message);
 
         return greetingRepository.save(greeting);
+    }
+
+    public List<Greeting> getAllGreetings() {
+        return greetingRepository.findAll();
+    }
+
+    public Greeting editGreeting(Long id,String message) {
+
+        Greeting greeting = greetingRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Greeting Not Found"));
+
+        greeting.setMessage(message);
+
+        return greeting;
+    }
+
+    public String deleteGreeting(Long id) {
+        Greeting greeting = greetingRepository.findById(id).orElseThrow(() -> new RuntimeException("Greeting Not Found"));
+
+        greetingRepository.delete(greeting);
+
+        return "Greeting Deleted";
     }
 }
